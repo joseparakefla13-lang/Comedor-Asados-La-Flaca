@@ -49,7 +49,7 @@ namespace Comedor_Asados_La_Flaca.Services
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
                 .Build();
 
-            string? connStr = config.GetConnectionString("DefaultConnection");
+            string? connStr = config.GetConnectionString("ConexionDB");
 
             if (string.IsNullOrEmpty(connStr))
                 throw new InvalidOperationException(

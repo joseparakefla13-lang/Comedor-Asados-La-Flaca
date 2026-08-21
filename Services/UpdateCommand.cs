@@ -16,41 +16,97 @@ namespace Comedor_Asados_La_Flaca.Services
             public UpdateCommand() : base() { }
             public UpdateCommand(string connectionString) : base(connectionString) { }
 
-            /// <summary>
-            /// Ejecuta un UPDATE y devuelve el número de filas afectadas.
-            /// </summary>
-            /// <param name="query">Sentencia UPDATE parametrizada.</param>
-            /// <param name="parameters">Parámetros SQL.</param>
-            /// <returns>Número de filas modificadas.</returns>
-            public int ExecuteUpdate(string query, SqlParameter[]? parameters = null)
+        /// <summary>
+        /// Ejecuta un UPDATE y devuelve el número de filas afectadas.
+        /// </summary>
+        /// <param name="query">Sentencia UPDATE parametrizada.</param>
+        /// <param name="parameters">Parámetros SQL.</param>
+        /// <returns>Número de filas modificadas.</returns>
+        public int ExecuteUpdateEmpleado(SqlParameter[] parameters)
+        {
+            try
             {
-                try
-                {
-                    OpenConnection();
+                OpenConnection();
 
-                    _command = new SqlCommand(query, _connection);
-                    _command.CommandType = CommandType.Text;
+                string query = @"
+    UPDATE Empleados
+    SET Nombre = @nombre,
+        Cedula = @cedula,
+        Telefono = @telefono,
+        Cargo = @cargo,
+        Salario = @salario,
+        FechaIngreso = @ingreso
+    WHERE Codigo = @codigo
+      AND Activo = 1";
 
-                    if (parameters is not null)
-                        _command.Parameters.AddRange(parameters);
 
-                    int rowsAffected = _command.ExecuteNonQuery();
+                _command = new SqlCommand(query, _connection);
+                _command.CommandType = CommandType.Text;
 
-                    if (rowsAffected == 0)
-                        throw new Exception("El UPDATE no afectó ningún registro. " +
-                                            "Verifica que el ID exista en la base de datos.");
+                if (parameters is not null)
+                    _command.Parameters.AddRange(parameters);
 
-                    return rowsAffected;
-                }
-                catch (SqlException ex)
-                {
-                    throw new Exception($"Error SQL al ejecutar UPDATE: {ex.Message}", ex);
-                }
-                finally
-                {
-                    CloseConnection();
-                }
+                int rowsAffected = _command.ExecuteNonQuery();
+
+                if (rowsAffected == 0)
+                    throw new Exception("El empleado no se pudo actualizar. " +
+                                        "Verifica que esté activo o que el código exista.");
+
+                return rowsAffected;
             }
-
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error SQL al ejecutar UPDATE: {ex.Message}", ex);
+            }
+            finally
+            {
+                CloseConnection();
+            }
         }
- }
+
+        /// <summary>
+        /// Reactiva un empleado inactivo y actualiza sus datos.
+        /// </summary>
+        public int ExecuteReactivarEmpleado(SqlParameter[] parameters)
+        {
+            try
+            {
+                OpenConnection();
+
+                string query = @"
+    UPDATE Empleados
+    SET Nombre = @nombre,
+        Cedula = @cedula,
+        Telefono = @telefono,
+        Cargo = @cargo,
+        Salario = @salario,
+        FechaIngreso = @ingreso,  
+        Activo = 1
+    WHERE Codigo = @codigo";
+
+
+                _command = new SqlCommand(query, _connection);
+                _command.CommandType = CommandType.Text;
+
+                if (parameters is not null)
+                    _command.Parameters.AddRange(parameters);
+
+                int rowsAffected = _command.ExecuteNonQuery();
+
+                if (rowsAffected == 0)
+                    throw new Exception("El empleado no se pudo actualizar. Verifica el código.");
+
+                return rowsAffected;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error SQL al ejecutar UPDATE: {ex.Message}", ex);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+
+    }
+}

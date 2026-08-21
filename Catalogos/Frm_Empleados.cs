@@ -15,16 +15,57 @@ namespace Comedor_Asados_La_Flaca.Catalogos
 {
     public partial class Frm_Empleados : Form
     {
-        private readonly SelectQuery selectQuery = new SelectQuery(); // instancia global
+        private readonly SelectQuery selectQuery = new SelectQuery(); 
 
         public Frm_Empleados()
         {
             InitializeComponent();
         }
-        private void CargarEmpleados()
+        private SqlParameter[] GetEmpleadoParametros(DataGridViewRow row)
         {
+            return new[]
+            {
+        new SqlParameter("@nombre", row.Cells["Nombre"].Value?.ToString() ?? (object)DBNull.Value),
+        new SqlParameter("@cedula", row.Cells["Cedula"].Value?.ToString() ?? (object)DBNull.Value),
+        new SqlParameter("@telefono", row.Cells["Telefono"].Value?.ToString() ?? (object)DBNull.Value),
+        new SqlParameter("@cargo", row.Cells["Cargo"].Value?.ToString() ?? (object)DBNull.Value),
+        new SqlParameter("@salario", Convert.ToDecimal(row.Cells["Salario"].Value ?? 0)),
+        new SqlParameter("@ingreso", Convert.ToDateTime(row.Cells["FechaIngreso"].Value ?? DateTime.Now)), // 👉 corregido
+        new SqlParameter("@codigo", row.Cells["Codigo"].Value?.ToString() ?? (object)DBNull.Value)
+    };
+        }
+
+
+        private void CargarEmpleados(string codigo = "")
+        {
+            DataTable resultado;
+
+            if (string.IsNullOrEmpty(codigo))
+            {
+                // 👉 Pantalla principal: solo activos
+                resultado = selectQuery.GetEmpleadosActivos();
+                empleadoBuscado = false;
+            }
+            else
+            {
+                // 👉 Búsqueda: activos e inactivos
+                resultado = selectQuery.BuscarPorCodigo(codigo);
+                empleadoBuscado = resultado.Rows.Count > 0;
+            }
+
             datagrewEmpleados.AutoGenerateColumns = false;
-            datagrewEmpleados.DataSource = selectQuery.GetEmpleadosActivos();
+            datagrewEmpleados.DataSource = resultado;
+
+            // Configuración de columnas
+            datagrewEmpleados.Columns.Clear();
+            datagrewEmpleados.Columns.Add("Codigo", "Código");
+            datagrewEmpleados.Columns.Add("Nombre", "Nombre");
+            datagrewEmpleados.Columns.Add("Cedula", "Cédula");
+            datagrewEmpleados.Columns.Add("Telefono", "Teléfono");
+            datagrewEmpleados.Columns.Add("Cargo", "Cargo");
+            datagrewEmpleados.Columns.Add("Salario", "Salario");
+            datagrewEmpleados.Columns.Add("FechaIngreso", "Ingreso");
+            datagrewEmpleados.Columns.Add("Estado", "Estado");
 
             datagrewEmpleados.Columns["Codigo"].DataPropertyName = "Codigo";
             datagrewEmpleados.Columns["Nombre"].DataPropertyName = "Nombre";
@@ -33,12 +74,21 @@ namespace Comedor_Asados_La_Flaca.Catalogos
             datagrewEmpleados.Columns["Cargo"].DataPropertyName = "Cargo";
             datagrewEmpleados.Columns["Salario"].DataPropertyName = "Salario";
             datagrewEmpleados.Columns["FechaIngreso"].DataPropertyName = "FechaIngreso";
-            datagrewEmpleados.Columns["Activo"].DataPropertyName = "Activo";
+            datagrewEmpleados.Columns["Estado"].DataPropertyName = "Estado";
 
-          
-            datagrewEmpleados.Columns["Activo"].ReadOnly = true;
+            // Permitir edición solo en algunas columnas
+            datagrewEmpleados.ReadOnly = false;
+            datagrewEmpleados.Columns["Nombre"].ReadOnly = false;
+            datagrewEmpleados.Columns["Telefono"].ReadOnly = false;
+            datagrewEmpleados.Columns["Cargo"].ReadOnly = false;
+            datagrewEmpleados.Columns["Salario"].ReadOnly = false;
 
-            datagrewEmpleados.ReadOnly = true;
+            // Bloquear las demás
+            datagrewEmpleados.Columns["Codigo"].ReadOnly = true;
+            datagrewEmpleados.Columns["Cedula"].ReadOnly = true;
+            datagrewEmpleados.Columns["Estado"].ReadOnly = true;
+            datagrewEmpleados.Columns["FechaIngreso"].ReadOnly = true;
+
             datagrewEmpleados.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             datagrewEmpleados.MultiSelect = false;
         }
@@ -54,9 +104,9 @@ namespace Comedor_Asados_La_Flaca.Catalogos
 
         private void Frm_Empleados_Load(object sender, EventArgs e)
         {
-            datagrewEmpleados.ReadOnly = true;      
+            datagrewEmpleados.ReadOnly = true;
             datagrewEmpleados.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            datagrewEmpleados.MultiSelect = false;  
+            datagrewEmpleados.MultiSelect = false;
 
             CargarEmpleados();
         }
@@ -87,10 +137,10 @@ namespace Comedor_Asados_La_Flaca.Catalogos
                 datagrewEmpleados.Columns["Cargo"].ReadOnly = false;
                 datagrewEmpleados.Columns["Salario"].ReadOnly = false;
 
-                // 👉 bloquear las demás
+
                 datagrewEmpleados.Columns["Codigo"].ReadOnly = true;
                 datagrewEmpleados.Columns["Cedula"].ReadOnly = true;
-                datagrewEmpleados.Columns["Activo"].ReadOnly = true;
+                datagrewEmpleados.Columns["Estado"].ReadOnly = true;
                 datagrewEmpleados.Columns["FechaIngreso"].ReadOnly = true;
             }
             else
@@ -104,66 +154,47 @@ namespace Comedor_Asados_La_Flaca.Catalogos
         private void btnEditarEmpleado_Click(object sender, EventArgs e)
         {
 
- 
-            if (!empleadoBuscado)
+            if (!empleadoBuscado || datagrewEmpleados.CurrentRow == null)
             {
-                MessageBox.Show("Debe buscar primero al empleado que desea actualizar.");
+                MessageBox.Show("Debe buscar y seleccionar un empleado primero.");
                 return;
             }
 
-            if (datagrewEmpleados.CurrentRow == null)
+            try
             {
-                MessageBox.Show("Seleccione una fila para editar.");
-                return;
-            }
+                var row = datagrewEmpleados.CurrentRow;
+                string estado = row.Cells["Estado"].Value?.ToString();
 
-            DataGridViewRow row = datagrewEmpleados.CurrentRow;
-            string codigo = row.Cells["Codigo"].Value.ToString();
+                var parametros = GetEmpleadoParametros(row);
+                UpdateCommand update = new UpdateCommand();
+                int filas;
 
-            // Estado original desde BD
-            bool estadoOriginal = selectQuery.GetEstadoEmpleado(codigo);
+                if (estado == "Trabajando")
+                {
+                    filas = update.ExecuteUpdateEmpleado(parametros);
+                    MessageBox.Show("Empleado actualizado correctamente.");
+                }
+                else if (estado == "Despedido")
+                {
+                    filas = update.ExecuteReactivarEmpleado(parametros);
+                    MessageBox.Show("Empleado reactivado y actualizado correctamente.");
+                }
+                else
+                {
+                    MessageBox.Show("Estado desconocido, no se puede editar.");
+                    return;
+                }
 
-            // Si estaba activo, no permitimos que se cambie a inactivo desde Editar
-            if (estadoOriginal)
-            {
-                MessageBox.Show("El estado no se puede cambiar desde Editar, use el botón Eliminar.");
-                return;
-            }
-
-            // Si estaba inactivo, se reactiva
-            string sql = @"UPDATE Empleados
-                   SET Nombre = @nombre,
-                       Telefono = @telefono,
-                       Cargo = @cargo,
-                       Salario = @salario,
-                       FechaIngreso = @fechaIngreso,
-                       Activo = 1
-                   WHERE Codigo = @codigo";
-
-            var parametros = new[]
-            {
-        new SqlParameter("@nombre", row.Cells["Nombre"].Value.ToString()),
-        new SqlParameter("@telefono", row.Cells["Telefono"].Value.ToString()),
-        new SqlParameter("@cargo", row.Cells["Cargo"].Value.ToString()),
-        new SqlParameter("@salario", Convert.ToDecimal(row.Cells["Salario"].Value)),
-        new SqlParameter("@fechaIngreso", Convert.ToDateTime(row.Cells["Ingreso"].Value)),
-        new SqlParameter("@codigo", codigo)
-    };
-
-            int filas = selectQuery.ExecuteNonQuery(sql, parametros);
-
-            if (filas > 0)
-            {
-                MessageBox.Show("Empleado reactivado y actualizado correctamente.");
                 txtBuscarEmpleados.Clear();
                 CargarEmpleados();
                 empleadoBuscado = false;
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("No se pudo actualizar el empleado.");
+                MessageBox.Show(ex.Message);
             }
         }
+
 
 
 
@@ -216,23 +247,36 @@ namespace Comedor_Asados_La_Flaca.Catalogos
             }
         }
 
-        private void datagrewEmpleados_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-
-            if (datagrewEmpleados.Columns[e.ColumnIndex].Name == "Activo" && e.Value != null)
-            {
-                bool estado = Convert.ToBoolean(e.Value);
-                e.Value = estado ? "Trabajando" : "Despedido";
-                e.FormattingApplied = true;
-            }
-        }
+     
 
         private void datagrewEmpleados_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.ThrowException = false;
         }
+
+        private void datagrewEmpleados_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+ 
+            string colName = datagrewEmpleados.Columns[e.ColumnIndex].Name;
+
+            if (colName == "Codigo")
+            {
+                MessageBox.Show("El código no se puede editar, es generado automáticamente.");
+                e.Cancel = true;
+            }
+            else if (colName == "Estado")
+            {
+                MessageBox.Show("El estado no se puede editar desde aquí. Use el botón Eliminar para dar de baja o Reactivar para volver a activo.");
+                e.Cancel = true; 
+            }
+        }
+
+
     }
+
 }
+
+
 
 
 

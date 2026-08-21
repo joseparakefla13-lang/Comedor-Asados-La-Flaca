@@ -29,6 +29,7 @@ namespace Comedor_Asados_La_Flaca.Catalogos
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
+   
             try
             {
                 string query = @"INSERT INTO Empleados
@@ -51,9 +52,15 @@ namespace Comedor_Asados_La_Flaca.Catalogos
                 int rows = insertService.ExecuteInsert(query, parameters);
 
                 if (rows > 0)
+                {
                     MessageBox.Show("Empleado guardado exitosamente.");
+
+                    this.Close();
+                }
                 else
+                {
                     MessageBox.Show("No se insertó ningún registro.");
+                }
             }
             catch (Exception ex)
             {

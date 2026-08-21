@@ -127,6 +127,7 @@
             txtCodigoClient.Location = new Point(325, 154);
             txtCodigoClient.Margin = new Padding(4, 5, 4, 5);
             txtCodigoClient.Name = "txtCodigoClient";
+            txtCodigoClient.ReadOnly = true;
             txtCodigoClient.Size = new Size(354, 43);
             txtCodigoClient.TabIndex = 17;
             // 

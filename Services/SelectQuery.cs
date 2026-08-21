@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Configuration;
 
 
 namespace Comedor_Asados_La_Flaca.Services
@@ -90,29 +91,45 @@ namespace Comedor_Asados_La_Flaca.Services
                 CloseConnection();
             }
         }
-    
+
         public DataTable GetEmpleadosActivos()
         {
-            string sql = @"SELECT Codigo, Nombre, Cedula, Telefono, Cargo, Salario, FechaIngreso, Activo
-                   FROM Empleados
-                   WHERE Activo = 1";
-            return ExecuteSelect(sql);
-        }
-        public bool GetEstadoEmpleado(string codigo)
-        {
-            string sql = "SELECT Activo FROM Empleados WHERE Codigo = @codigo";
-            SqlParameter[] parametros = { new SqlParameter("@codigo", codigo) };
-
-            DataTable dt = ExecuteSelect(sql, parametros);
-
-            if (dt.Rows.Count > 0)
+            using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
             {
-                return Convert.ToBoolean(dt.Rows[0]["Activo"]);
-            }
+                string sql = @"
+            SELECT Codigo, Nombre, Cedula, Telefono, Cargo, Salario, FechaIngreso,
+                   'Trabajando' AS Estado
+            FROM Empleados
+            WHERE Activo = 1";  
 
-            // Si no encuentra nada, por defecto lo consideramos inactivo
-            return false;
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
         }
+        public DataTable BuscarPorCodigo(string codigo)
+        {
+            using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
+            {
+                string sql = @"
+            SELECT Codigo, Nombre, Cedula, Telefono, Cargo, Salario, FechaIngreso,
+                   CASE WHEN Activo = 1 THEN 'Trabajando' ELSE 'Despedido' END AS Estado
+            FROM Empleados
+            WHERE Codigo LIKE @codigo + '%'";   
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@codigo", codigo);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+
+
+
         public bool GetEstadoCliente(string codigo)
         {
             string sql = "SELECT Activo FROM Clientes WHERE Codigo = @codigo";
@@ -129,34 +146,28 @@ namespace Comedor_Asados_La_Flaca.Services
             return false;
         }
 
-
-
-        public DataTable BuscarPorCodigo(string codigo)
+        public DataTable BuscarClientePorCodigo(string codigo)
         {
-            string query = @"SELECT Codigo, Nombre,Cedula, Telefono, Cargo, Salario, FechaIngreso, Activo 
-                     FROM Empleados WHERE Codigo LIKE @Codigo";
+            string sql = @"
+        SELECT Codigo,
+               Nombre,
+               Telefono,
+               Direccion,
+               Notas,
+               CASE WHEN Activo = 1 THEN 'Activo' ELSE 'Inactivo' END AS Estado
+        FROM Clientes
+        WHERE Codigo LIKE @Codigo";
 
             var parametros = new[]
             {
         new SqlParameter("@Codigo", codigo + "%")
     };
 
-            return ExecuteSelect(query, parametros);
+            return ExecuteSelect(sql, parametros);
         }
 
-        public DataTable BuscarClientePorCodigo(string codigo)
-        {
-            string query = @"SELECT Codigo, Nombre, Telefono, Direccion, Notas, Activo
-                     FROM Clientes
-                     WHERE Codigo LIKE @Codigo";
 
-            var parametros = new[]
-            {
-        new SqlParameter("@Codigo", codigo + "%")
-            };
 
-            return ExecuteSelect(query, parametros);
-        }
 
         public string ValidarLogin(string usuario, string contraseña)
         {
@@ -224,11 +235,23 @@ namespace Comedor_Asados_La_Flaca.Services
         }
         public DataTable GetClientesActivos()
         {
-            string sql = @"SELECT Codigo, Nombre, Telefono, Direccion, Notas, Activo
-                   FROM Clientes
-                   WHERE Activo = 1";
+            string sql = @"
+        SELECT Codigo,
+               Nombre,
+               Telefono,
+               Direccion,
+               Notas,
+               'Activo' AS Estado
+        FROM Clientes
+        WHERE Activo = 1";
+
             return ExecuteSelect(sql);
         }
+
+
+
+
+
 
 
 

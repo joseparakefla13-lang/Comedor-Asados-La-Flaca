@@ -91,7 +91,7 @@
             datagrewEmpleados.RowTemplate.Height = 28;
             datagrewEmpleados.Size = new Size(1457, 608);
             datagrewEmpleados.TabIndex = 29;
-            datagrewEmpleados.CellFormatting += datagrewEmpleados_CellFormatting;
+            datagrewEmpleados.CellBeginEdit += datagrewEmpleados_CellBeginEdit;
             datagrewEmpleados.DataError += datagrewEmpleados_DataError;
             // 
             // Codigo
