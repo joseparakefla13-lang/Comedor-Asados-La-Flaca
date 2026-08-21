@@ -33,6 +33,7 @@
             datagrewEmpleados = new DataGridView();
             Codigo = new DataGridViewTextBoxColumn();
             Nombre = new DataGridViewTextBoxColumn();
+            Cedula = new DataGridViewTextBoxColumn();
             Telefono = new DataGridViewTextBoxColumn();
             Cargo = new DataGridViewTextBoxColumn();
             Salario = new DataGridViewTextBoxColumn();
@@ -58,6 +59,7 @@
             btnEliminarEmpleado.TabIndex = 31;
             btnEliminarEmpleado.Text = "Eliminar";
             btnEliminarEmpleado.UseVisualStyleBackColor = false;
+            btnEliminarEmpleado.Click += btnEliminarEmpleado_Click;
             // 
             // btnEditarEmpleado
             // 
@@ -72,6 +74,7 @@
             btnEditarEmpleado.TabIndex = 30;
             btnEditarEmpleado.Text = "Editar";
             btnEditarEmpleado.UseVisualStyleBackColor = false;
+            btnEditarEmpleado.Click += btnEditarEmpleado_Click;
             // 
             // datagrewEmpleados
             // 
@@ -80,7 +83,7 @@
             datagrewEmpleados.BorderStyle = BorderStyle.None;
             datagrewEmpleados.CellBorderStyle = DataGridViewCellBorderStyle.None;
             datagrewEmpleados.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            datagrewEmpleados.Columns.AddRange(new DataGridViewColumn[] { Codigo, Nombre, Telefono, Cargo, Salario, FechaIngreso, Activo });
+            datagrewEmpleados.Columns.AddRange(new DataGridViewColumn[] { Codigo, Nombre, Cedula, Telefono, Cargo, Salario, FechaIngreso, Activo });
             datagrewEmpleados.Location = new Point(119, 137);
             datagrewEmpleados.Margin = new Padding(4, 6, 4, 6);
             datagrewEmpleados.Name = "datagrewEmpleados";
@@ -88,6 +91,8 @@
             datagrewEmpleados.RowTemplate.Height = 28;
             datagrewEmpleados.Size = new Size(1457, 608);
             datagrewEmpleados.TabIndex = 29;
+            datagrewEmpleados.CellFormatting += datagrewEmpleados_CellFormatting;
+            datagrewEmpleados.DataError += datagrewEmpleados_DataError;
             // 
             // Codigo
             // 
@@ -100,6 +105,12 @@
             Nombre.HeaderText = "Nombre";
             Nombre.MinimumWidth = 8;
             Nombre.Name = "Nombre";
+            // 
+            // Cedula
+            // 
+            Cedula.HeaderText = "Cedula";
+            Cedula.MinimumWidth = 10;
+            Cedula.Name = "Cedula";
             // 
             // Telefono
             // 
@@ -210,16 +221,17 @@
         private Button btnEliminarEmpleado;
         private Button btnEditarEmpleado;
         private DataGridView datagrewEmpleados;
+        private Button btnNuevoEmpleado;
+        private TextBox txtBuscarEmpleados;
+        private Label lblBuscarEmpleados;
+        private Label lblEmpleados;
         private DataGridViewTextBoxColumn Codigo;
         private DataGridViewTextBoxColumn Nombre;
+        private DataGridViewTextBoxColumn Cedula;
         private DataGridViewTextBoxColumn Telefono;
         private DataGridViewTextBoxColumn Cargo;
         private DataGridViewTextBoxColumn Salario;
         private DataGridViewTextBoxColumn FechaIngreso;
         private DataGridViewTextBoxColumn Activo;
-        private Button btnNuevoEmpleado;
-        private TextBox txtBuscarEmpleados;
-        private Label lblBuscarEmpleados;
-        private Label lblEmpleados;
     }
 }

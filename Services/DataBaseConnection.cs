@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Configuration;
+using System.Data;
 
 namespace Comedor_Asados_La_Flaca.Services
 {
@@ -92,6 +93,30 @@ namespace Comedor_Asados_La_Flaca.Services
                 _disposed = true;
             }
         }
+        public int ExecuteNonQuery(string query, SqlParameter[] parameters = null)
+        {
+            try
+            {
+                OpenConnection();
+
+                using SqlCommand cmd = new SqlCommand(query, _connection);
+                cmd.CommandType = CommandType.Text;
+
+                if (parameters != null)
+                    cmd.Parameters.AddRange(parameters);
+
+                return cmd.ExecuteNonQuery(); 
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error al ejecutar NonQuery: {ex.Message}", ex);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+
     }
 }
 

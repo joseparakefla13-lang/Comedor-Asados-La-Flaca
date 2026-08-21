@@ -1,16 +1,16 @@
-﻿namespace InisioSesion_Asado
+﻿namespace Comedor_Asados_La_Flaca.Catalogos
 {
-    partial class INICIO
+    partial class Frm_Login
     {
         /// <summary>
-        /// Variable del diseñador necesaria.
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Limpiar los recursos que se estén usando.
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,19 +20,21 @@
             base.Dispose(disposing);
         }
 
-        #region Código generado por el Diseñador de Windows Forms
+        #region Windows Form Designer generated code
 
         /// <summary>
-        /// Método necesario para admitir el Diseñador. No se puede modificar
-        /// el contenido de este método con el editor de código.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(INICIO));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Login));
             panel1 = new Panel();
             groupBox1 = new GroupBox();
+            pictureBox2 = new PictureBox();
+            pictureBox1 = new PictureBox();
             btnOlvidoContraseña = new Button();
-            btnimgresar = new Button();
+            BtnIngresar = new Button();
             checkContraseña = new CheckBox();
             btnOcultar = new Button();
             pictureBox5 = new PictureBox();
@@ -41,15 +43,13 @@
             txtusuario = new TextBox();
             label1 = new Label();
             pictureBox3 = new PictureBox();
-            pictureBox2 = new PictureBox();
-            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -57,19 +57,18 @@
             panel1.Controls.Add(groupBox1);
             panel1.Controls.Add(pictureBox2);
             panel1.Dock = DockStyle.Right;
-            panel1.Location = new Point(846, 0);
+            panel1.Location = new Point(843, 0);
             panel1.Margin = new Padding(4, 5, 4, 5);
             panel1.Name = "panel1";
-            panel1.Size = new Size(893, 1053);
-            panel1.TabIndex = 2;
+            panel1.Size = new Size(893, 1011);
+            panel1.TabIndex = 4;
             // 
             // groupBox1
             // 
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.AutoSize = true;
             groupBox1.BackColor = Color.WhiteSmoke;
             groupBox1.Controls.Add(btnOlvidoContraseña);
-            groupBox1.Controls.Add(btnimgresar);
+            groupBox1.Controls.Add(BtnIngresar);
             groupBox1.Controls.Add(checkContraseña);
             groupBox1.Controls.Add(btnOcultar);
             groupBox1.Controls.Add(pictureBox5);
@@ -78,13 +77,37 @@
             groupBox1.Controls.Add(txtusuario);
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(pictureBox3);
-            groupBox1.Location = new Point(36, 68);
+            groupBox1.Location = new Point(68, 5);
             groupBox1.Margin = new Padding(4, 5, 4, 5);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4, 5, 4, 5);
-            groupBox1.Size = new Size(827, 921);
+            groupBox1.Size = new Size(791, 992);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(-36, -134);
+            pictureBox2.Margin = new Padding(4, 5, 4, 5);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(1655, 2099);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 0;
+            pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(0, -21);
+            pictureBox1.Margin = new Padding(4, 5, 4, 5);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(885, 1053);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 3;
+            pictureBox1.TabStop = false;
             // 
             // btnOlvidoContraseña
             // 
@@ -98,30 +121,30 @@
             btnOlvidoContraseña.FlatStyle = FlatStyle.Flat;
             btnOlvidoContraseña.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnOlvidoContraseña.ForeColor = Color.Brown;
-            btnOlvidoContraseña.Location = new Point(235, 750);
+            btnOlvidoContraseña.Location = new Point(237, 827);
             btnOlvidoContraseña.Margin = new Padding(4, 5, 4, 5);
             btnOlvidoContraseña.Name = "btnOlvidoContraseña";
             btnOlvidoContraseña.Size = new Size(324, 82);
-            btnOlvidoContraseña.TabIndex = 9;
+            btnOlvidoContraseña.TabIndex = 19;
             btnOlvidoContraseña.Text = "¿Olvido su Contraseña?";
             btnOlvidoContraseña.UseVisualStyleBackColor = false;
             // 
-            // btnimgresar
+            // BtnIngresar
             // 
-            btnimgresar.Anchor = AnchorStyles.Left;
-            btnimgresar.BackColor = Color.FromArgb(153, 40, 35);
-            btnimgresar.Cursor = Cursors.Hand;
-            btnimgresar.FlatStyle = FlatStyle.Popup;
-            btnimgresar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnimgresar.ForeColor = Color.FromArgb(250, 247, 241);
-            btnimgresar.Location = new Point(235, 645);
-            btnimgresar.Margin = new Padding(4, 5, 4, 5);
-            btnimgresar.Name = "btnimgresar";
-            btnimgresar.Size = new Size(324, 82);
-            btnimgresar.TabIndex = 8;
-            btnimgresar.Text = "Ingresar";
-            btnimgresar.UseVisualStyleBackColor = false;
-            btnimgresar.Click += btnimgresar_Click;
+            BtnIngresar.Anchor = AnchorStyles.Left;
+            BtnIngresar.BackColor = Color.FromArgb(153, 40, 35);
+            BtnIngresar.Cursor = Cursors.Hand;
+            BtnIngresar.FlatStyle = FlatStyle.Popup;
+            BtnIngresar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnIngresar.ForeColor = Color.FromArgb(250, 247, 241);
+            BtnIngresar.Location = new Point(237, 716);
+            BtnIngresar.Margin = new Padding(4, 5, 4, 5);
+            BtnIngresar.Name = "BtnIngresar";
+            BtnIngresar.Size = new Size(324, 82);
+            BtnIngresar.TabIndex = 18;
+            BtnIngresar.Text = "Ingresar";
+            BtnIngresar.UseVisualStyleBackColor = false;
+            BtnIngresar.Click += BtnIngresar_Click;
             // 
             // checkContraseña
             // 
@@ -130,11 +153,11 @@
             checkContraseña.Cursor = Cursors.Hand;
             checkContraseña.FlatStyle = FlatStyle.Popup;
             checkContraseña.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkContraseña.Location = new Point(182, 577);
+            checkContraseña.Location = new Point(132, 644);
             checkContraseña.Margin = new Padding(4, 5, 4, 5);
             checkContraseña.Name = "checkContraseña";
             checkContraseña.Size = new Size(281, 36);
-            checkContraseña.TabIndex = 7;
+            checkContraseña.TabIndex = 17;
             checkContraseña.Text = "Recordar Contraseña";
             checkContraseña.UseVisualStyleBackColor = true;
             // 
@@ -145,24 +168,23 @@
             btnOcultar.Cursor = Cursors.Hand;
             btnOcultar.FlatStyle = FlatStyle.Popup;
             btnOcultar.Image = (Image)resources.GetObject("btnOcultar.Image");
-            btnOcultar.Location = new Point(650, 450);
+            btnOcultar.Location = new Point(646, 517);
             btnOcultar.Margin = new Padding(4, 5, 4, 5);
             btnOcultar.Name = "btnOcultar";
-            btnOcultar.Size = new Size(169, 80);
-            btnOcultar.TabIndex = 6;
+            btnOcultar.Size = new Size(123, 80);
+            btnOcultar.TabIndex = 16;
             btnOcultar.UseVisualStyleBackColor = false;
-            btnOcultar.Click += button1_Click;
             // 
             // pictureBox5
             // 
             pictureBox5.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
-            pictureBox5.Location = new Point(72, 450);
+            pictureBox5.Location = new Point(22, 517);
             pictureBox5.Margin = new Padding(4, 5, 4, 5);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(155, 80);
             pictureBox5.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox5.TabIndex = 5;
+            pictureBox5.TabIndex = 15;
             pictureBox5.TabStop = false;
             // 
             // txtcontraseña
@@ -173,27 +195,24 @@
             txtcontraseña.Cursor = Cursors.Hand;
             txtcontraseña.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtcontraseña.ForeColor = Color.FromArgb(153, 40, 35);
-            txtcontraseña.Location = new Point(235, 450);
+            txtcontraseña.Location = new Point(185, 517);
             txtcontraseña.Margin = new Padding(4, 5, 4, 5);
             txtcontraseña.Multiline = true;
             txtcontraseña.Name = "txtcontraseña";
             txtcontraseña.Size = new Size(453, 79);
-            txtcontraseña.TabIndex = 4;
+            txtcontraseña.TabIndex = 14;
             txtcontraseña.Text = "Contraseña";
-            txtcontraseña.TextChanged += textBox2_TextChanged;
-            txtcontraseña.Enter += textBox2_Enter;
-            txtcontraseña.Leave += textBox2_Leave;
             // 
             // pictureBox4
             // 
             pictureBox4.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(72, 322);
+            pictureBox4.Location = new Point(22, 389);
             pictureBox4.Margin = new Padding(4, 5, 4, 5);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(155, 80);
             pictureBox4.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox4.TabIndex = 3;
+            pictureBox4.TabIndex = 13;
             pictureBox4.TabStop = false;
             // 
             // txtusuario
@@ -204,106 +223,73 @@
             txtusuario.Cursor = Cursors.Hand;
             txtusuario.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtusuario.ForeColor = Color.FromArgb(153, 40, 35);
-            txtusuario.Location = new Point(235, 323);
+            txtusuario.Location = new Point(185, 390);
             txtusuario.Margin = new Padding(4, 5, 4, 5);
             txtusuario.Multiline = true;
             txtusuario.Name = "txtusuario";
             txtusuario.Size = new Size(453, 79);
-            txtusuario.TabIndex = 2;
+            txtusuario.TabIndex = 12;
             txtusuario.Text = "Usuario";
-            txtusuario.Enter += textBox1_Enter;
-            txtusuario.Leave += textBox1_Leave;
             // 
             // label1
             // 
             label1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label1.Location = new Point(299, 240);
+            label1.Location = new Point(249, 307);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(260, 45);
-            label1.TabIndex = 1;
+            label1.TabIndex = 11;
             label1.Text = "INICIAR SESIÓN";
             // 
             // pictureBox3
             // 
             pictureBox3.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(254, 17);
+            pictureBox3.Location = new Point(204, 84);
             pictureBox3.Margin = new Padding(4, 5, 4, 5);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(366, 194);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox3.TabIndex = 0;
+            pictureBox3.TabIndex = 10;
             pictureBox3.TabStop = false;
             // 
-            // pictureBox2
-            // 
-            pictureBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(-36, -134);
-            pictureBox2.Margin = new Padding(4, 5, 4, 5);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(962, 1188);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox2.TabIndex = 0;
-            pictureBox2.TabStop = false;
-            pictureBox2.Click += pictureBox2_Click;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Margin = new Padding(4, 5, 4, 5);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(862, 1053);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
-            // 
-            // INICIO
+            // Frm_Login
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1739, 1053);
+            ClientSize = new Size(1736, 1011);
             Controls.Add(panel1);
             Controls.Add(pictureBox1);
-            Cursor = Cursors.Hand;
-            Margin = new Padding(4, 5, 4, 5);
-            Name = "INICIO";
-            Text = "InisioSesion";
+            Name = "Frm_Login";
+            Text = "Frm_Login";
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
-
         }
-
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtusuario;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.TextBox txtcontraseña;
-        private System.Windows.Forms.Button btnOcultar;
-        private System.Windows.Forms.CheckBox checkContraseña;
-        private System.Windows.Forms.Button btnOlvidoContraseña;
-        private System.Windows.Forms.Button btnimgresar;
+        private Panel panel1;
+        private GroupBox groupBox1;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox1;
+        private Button btnOlvidoContraseña;
+        private Button BtnIngresar;
+        private CheckBox checkContraseña;
+        private Button btnOcultar;
+        private PictureBox pictureBox5;
+        private TextBox txtcontraseña;
+        private PictureBox pictureBox4;
+        private TextBox txtusuario;
+        private Label label1;
+        private PictureBox pictureBox3;
     }
 }
-

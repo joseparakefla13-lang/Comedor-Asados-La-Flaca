@@ -8,18 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace InisioSesion_Asado.FROMS
+namespace Comedor_Asados_La_Flaca.Catalogos
 {
-    public partial class MENU : Form
+    public partial class Frm_Menu : Form
     {
-        public MENU()
+        public Frm_Menu()
         {
             InitializeComponent();
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        private void btnEmpleados_Click(object sender, EventArgs e)
         {
-
+            Frm_Empleados frmEmpleados = new Frm_Empleados();
+            frmEmpleados.Show();
         }
     }
 }
